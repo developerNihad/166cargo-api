@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToOne } from "typeorm";
 import { CommonEntity } from "./Common.entity";
+import { User } from "./User.entity";
 
 @Entity()
 export class Settings extends CommonEntity {
@@ -15,4 +16,7 @@ export class Settings extends CommonEntity {
 
     @Column()
     contactDetails: string;
+
+    @OneToOne(() => User, (user) => user.settings)
+    user: User;
 }

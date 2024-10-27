@@ -1,7 +1,9 @@
-import { BeforeInsert, Column, Entity } from "typeorm";
+import { BeforeInsert, Column, Entity, OneToMany, OneToOne } from "typeorm";
 import { CommonEntity } from "./Common.entity";
 
 import * as bcrypt from 'bcrypt';
+import { Order } from "./Order.entity";
+import { Settings } from "./Settings.entity";
 
 export type UserKey = keyof User;
 
@@ -24,5 +26,11 @@ export class User extends CommonEntity {
     async beforeInsert() {
         this.password = await bcrypt.hash(this.password, 20);
     }
+
+    @OneToMany(() => Order, (order) => order.user)
+    orders: Order[];
+
+    @OneToOne(() => Settings, (settings) => settings.user)
+    settings: Settings;
 
 }

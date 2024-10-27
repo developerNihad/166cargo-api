@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { CommonEntity } from "./Common.entity";
+import { Order } from "./Order.entity";
 
 @Entity()
 export class Tariff extends CommonEntity {
@@ -11,4 +12,7 @@ export class Tariff extends CommonEntity {
 
     @Column()
     description: string;
+
+    @OneToMany(() => Order, (order) => order.tariff)
+    orders: Order[];
 }

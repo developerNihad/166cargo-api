@@ -1,5 +1,7 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import { CommonEntity } from "./Common.entity";
+import { User } from "./User.entity";
+import { Tariff } from "./Tariff.entity";
 
 @Entity()
 export class Order extends CommonEntity {
@@ -14,4 +16,10 @@ export class Order extends CommonEntity {
 
     @Column()
     tariffId: number;
+
+    @ManyToOne(() => User, (user) => user.orders)
+    user: User;
+
+    @ManyToOne(() => Tariff, (tariff) => tariff.orders)
+    tariff: Tariff;
 }
